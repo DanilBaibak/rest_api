@@ -12,7 +12,7 @@ return array(
         'action'     => 'getGroups'
     ),
     array(
-        'resource'   => 'shippers',
+        'resource'   => 'shnippers',
         'controller' => 'AuxiliaryDataController',
         'action'     => 'getShippers'
     ),
