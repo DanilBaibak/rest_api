@@ -10,7 +10,7 @@ namespace Core;
 
 class Router
 {
-    public function run()
+    public static function run()
     {
         //get resources
         $resources = include CONFIG . 'resources.php';
