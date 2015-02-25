@@ -12,10 +12,14 @@ class Router
 {
     public static function run()
     {
-        //get resources
-        $resources = include CONFIG . 'resources.php';
-        //check resources
-        if (empty($resources)) {
+        $hasResource = false;
+        $pathToResources = CONFIG . 'resources.php';
+
+        //check file with resources
+        if (file_exists($pathToResources)) {
+            //get resources
+            $resources = include $pathToResources;
+        } else {
             throw new \Exception('File with resources is empty');
         }
 
@@ -23,10 +27,9 @@ class Router
             //prepare request url
             $requestUrl = str_replace('/', '', $_SERVER['REQUEST_URI']);
             if (strpos($requestUrl, "?") !== false) {
-                $requestUrl = str_replace(substr($requestUrl, strpos($requestUrl, "?")), "", $requestUrl);
+                $requestUrl = substr($requestUrl, 0, strpos($requestUrl, "?"));
             }
 
-            $hasResource = false;
             //check requested resource in the existing resource list
             foreach($resources as $resource) {
                 if ($resource['resource'] == $requestUrl) {
