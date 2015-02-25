@@ -6,5 +6,6 @@ return array(
         'password' => '',
         'dbname' => '',
         'charset' => 'utf8'
-    )
+    ),
+    'displayErrors' => false,
 );
