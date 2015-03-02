@@ -35,8 +35,7 @@ class Bootstrap
             error_reporting(0);
         }
 
-//        session_start();
-
-        Router::run();
+        $router = new Router();
+        $router->run();
     }
 }
