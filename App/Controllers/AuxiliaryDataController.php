@@ -18,20 +18,17 @@ class AuxiliaryDataController extends AbstractController
         $this->auxiliarModel = new AuxiliaryDataModel();
     }
     /**
-     * Return list of the group
+     * Return list of the groups
      */
     public function getGroups()
     {
-        if ($this->isGet()) {
-            $groups = $this->auxiliarModel->getGroups();
-            $sendGroups = array();
-            foreach ($groups as $group) {
-                $sendGroups[] = array('value' => $group['name'], 'text' => $group['name']);
-            }
-            echo json_encode($sendGroups);
-        } else {
-            header('HTTP/1.0 400 Bad Request');
+        $groups = $this->auxiliarModel->getGroups();
+        //map data
+        $sendGroups = array();
+        foreach ($groups as $group) {
+            $sendGroups[] = array('value' => $group['name'], 'text' => $group['name']);
         }
+        echo json_encode($sendGroups);
     }
 
     /**
@@ -39,15 +36,12 @@ class AuxiliaryDataController extends AbstractController
      */
     public function getShippers()
     {
-        if ($this->isGet()) {
-            $shippers = $this->auxiliarModel->getShippers();
-            $sendShippers = array();
-            foreach ($shippers as $shipper) {
-                $sendShippers[] = array('value' => $shipper['name'], 'text' => $shipper['name']);
-            }
-            echo json_encode($sendShippers);
-        } else {
-            header('HTTP/1.0 400 Bad Request');
+        $shippers = $this->auxiliarModel->getShippers();
+        $sendShippers = array();
+        //map data
+        foreach ($shippers as $shipper) {
+            $sendShippers[] = array('value' => $shipper['name'], 'text' => $shipper['name']);
         }
+        echo json_encode($sendShippers);
     }
 }

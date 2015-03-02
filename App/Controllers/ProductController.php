@@ -6,10 +6,9 @@
  */
 namespace App\Controllers;
 
-use App\Models\ProductsModel,
-    Core\AbstractController;
+use App\Models\ProductsModel;
 
-class ProductController extends AbstractController
+class ProductController extends \Core\AbstractController
 {
     protected $productManager;
 
@@ -19,73 +18,65 @@ class ProductController extends AbstractController
     }
 
     /**
-     * Method for working with products
+     * Get current product by id
+     *
+     * @param int $productId id of the current product
      */
-    public function products()
+    public function getProduct($productId)
     {
-        switch($this->getRequestMethod()) {
-            /**
-             * Update current product
-             */
-            case 'POST':
-                $inputData = $this->getParams();
-                if (!empty($inputData)) {
-                    echo $this->productManager->updateProduct($this->clearData($inputData));
-                } else {
-                    header('HTTP/1.0 400 Bad Request');
-                }
-                break;
+        echo json_encode($this->productManager->getProduct((int)$productId));
+    }
 
-            /**
-             * Get the list of the current product or products
-             */
-            case 'GET':
-                $productId = $this->fromGet('id');
-                if ($productId && !empty($productId)) {
-                    $products = $this->productManager->getProduct($productId);
-                } else {
-                    $products = $this->productManager->getProducts();
-                }
-                echo json_encode($products);
-                break;
+    /**
+     * Get list of the whole products
+     */
+    public function getProducts()
+    {
+        $products = $this->productManager->getProducts();
+        echo json_encode($products);
+    }
 
+    /**
+     * Create product
+     */
+    public function createProduct()
+    {
+        $inputData = $this->getParams();
+        if (!empty($inputData)) {
             /**
-             * Add new product
-             *
-             * @return bool - true if data was added successful and false if not
+             * TODO - write some model for checking data
              */
-            case 'PUT':
-                $inputData = $this->getParams();
-                if (!empty($inputData)) {
-                    //check all data
-                    $insertData = array(
-                        'name' => isset($inputData['name']) ? $this->clearData($inputData['name']) : "",
-                        'count' => isset($inputData['count']) ? $this->clearData($inputData['count']) : "",
-                        'cost' => isset($inputData['cost']) ? $this->clearData($inputData['cost']) : "",
-                        'group' => isset($inputData['group']) ? $this->clearData($inputData['group']) : "",
-                        'shipper' => isset($inputData['shipper']) ? $this->clearData($inputData['shipper']) : ""
-                    );
-                    //check how many rows were created
-                    echo $this->productManager->addProduct($this->clearData($insertData)) > 0 ? true : false;
-                } else {
-                    header('HTTP/1.0 400 Bad Request');
-                }
-                break;
+            //check how many rows were created
+            echo $this->productManager->addProduct($this->clearData($inputData)) > 0 ? true : false;
+        } else {
+            header('HTTP/1.0 400 Bad Request');
+        }
+    }
 
-            /**
-             * Remove current product from the DB
-             *
-             * @return bool - true if data was removed successful and false if not
-             */
-            case 'DELETE':
-                $data = $this->getParams();
-                $productId = $data['id'];
-                if (!empty($productId)) {
-                    echo $this->productManager->removeProduct($productId);
-                } else {
-                    header('HTTP/1.0 400 Bad Request');
-                }
-                break;
+    /**
+     * Update current product
+     */
+    public function updateProduct()
+    {
+        $inputData = $this->getParams();
+        if (!empty($inputData)) {
+            echo $this->productManager->updateProduct($this->clearData($inputData));
+        } else {
+            header('HTTP/1.0 400 Bad Request');
+        }
+    }
+
+    /**
+     * Remove current product
+     *
+     * @param int $productId id of the product
+     */
+    public function removeProduct($productId)
+    {
+        if (!empty($productId)) {
+            echo $this->productManager->removeProduct((int)$productId);
+        } else {
+            header('HTTP/1.0 400 Bad Request');
         }
     }
 
@@ -97,7 +88,7 @@ class ProductController extends AbstractController
     {
         $fieldName  = $this->fromGet('field');
         $fieldValue = $this->fromGet('value');
-        if ($this->isGet() && !empty($fieldName) && !empty($fieldValue)) {
+        if (!empty($fieldName) && !empty($fieldValue)) {
             $productId = $this->productManager->checkField(
                 $this->clearData($fieldName),
                 $this->clearData($fieldValue)
