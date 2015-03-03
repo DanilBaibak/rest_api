@@ -17,9 +17,7 @@ class ProductsModel extends DbAdapter
      */
     public function getProducts()
     {
-        return $this->getArray(
-            'SELECT `id`, `name`, `count`, `cost`, `group`, `shipper` FROM ng_products ORDER BY `name`'
-        );
+        return $this->getArray("SELECT id, name, count, cost, `group`, shipper FROM ng_products ORDER BY name");
     }
 
     /**
@@ -30,12 +28,16 @@ class ProductsModel extends DbAdapter
      */
     public function addProduct($data)
     {
-        return $this->makeQuery('INSERT INTO ng_products (`name`, `count`, `cost`, `group`, `shipper`) VALUES("'
-            . $data['name']  . '", "'
-            . $data['count']  . '", "'
-            . $data['cost']  . '", "'
-            . $data['group']  . '", "'
-            . $data['shipper']  . '")');
+        return $this->makeQuery("INSERT INTO ng_products (name, count, cost, `group`, shipper)" .
+            " VALUES(':name', ':count', ':cost', ':group', ':shipper')",
+            array(
+                'name' => $data['name'],
+                'count' => $data['count'],
+                'cost' => $data['cost'],
+                'group' => $data['group'],
+                'shipper' => $data['shipper']
+            )
+        );
     }
 
     /**
@@ -46,7 +48,7 @@ class ProductsModel extends DbAdapter
      */
     public function removeProduct($id)
     {
-        return $this->makeQuery('DELETE FROM ng_products WHERE id =' . (int) $id);
+        return $this->makeQuery('DELETE FROM ng_products WHERE id = :id', array('id' => (int) $id));
     }
 
     /**
@@ -58,7 +60,8 @@ class ProductsModel extends DbAdapter
     public function getProduct($id)
     {
         return $this->getArray(
-            "SELECT id, `name`, `count`, `cost`, `group`, `shipper` FROM ng_products WHERE id = " . (int) $id
+            "SELECT id, name, count, cost, `group`, shipper FROM ng_products WHERE id = :id",
+            array('id' => (int)$id)
         );
     }
 
@@ -70,9 +73,18 @@ class ProductsModel extends DbAdapter
      */
     public function updateProduct($data)
     {
-        return $this->makeQuery("UPDATE ng_products SET `name`='" . $data['name'] .
-            "', `count`='" . $data['count'] . "', `cost`='" . $data['cost'] . "', `group`='" . $data['group'] .
-            "', `shipper`='" . $data['shipper'] . "' WHERE id='" . $data['id'] . "'");
+        return $this->makeQuery(
+            "UPDATE ng_products SET name=':name', count=':count', cost=':cost', `group`=':group', shipper=':shipper' " .
+            "WHERE id=':id'",
+            array(
+                'name' => $data['name'],
+                'count' => $data['count'],
+                'cost' => $data['cost'],
+                'group' => $data['group'],
+                'shipper' => $data['shipper'],
+                'id' => $data['id']
+            )
+        );
     }
 
     /**
@@ -84,6 +96,9 @@ class ProductsModel extends DbAdapter
      */
     public function checkField($field, $value)
     {
-        return $this->getResult("SELECT id FROM ng_products WHERE " . $field . "='" . $value . "'");
+        return $this->getResult(
+            "SELECT id FROM ng_products WHERE :fieldName = ':value'",
+            array('fieldName' => $field, 'value' => $value)
+        );
     }
 }

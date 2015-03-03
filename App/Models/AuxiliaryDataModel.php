@@ -17,7 +17,7 @@ class AuxiliaryDataModel extends DbAdapter
      */
     public function getGroups()
     {
-        return $this->getArray('SELECT `name` FROM ng_groups ORDER BY `name`');
+        return $this->getArray('SELECT name FROM ng_groups ORDER BY name');
     }
 
     /**
@@ -27,6 +27,6 @@ class AuxiliaryDataModel extends DbAdapter
      */
     public function getShippers()
     {
-        return $this->getArray('SELECT `name` FROM ng_shippers ORDER BY `name`');
+        return $this->getArray('SELECT name FROM ng_shippers ORDER BY name');
     }
 }
