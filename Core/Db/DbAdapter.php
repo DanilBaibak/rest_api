@@ -17,9 +17,9 @@ class DbAdapter extends AbstractDb
      * @param string $query - query select
      * @return string mixed - value that was selected or bool false if any results
      */
-    public function getResult($query)
+    public function getResult($query, $parameters = array())
     {
-        $query = $this->query($query);
+        $query = $this->query($query, $parameters);
         //if there is result, get first value
         if ($query->num_rows > 0) {
             $queryResult = $query->fetch_array();
@@ -34,9 +34,9 @@ class DbAdapter extends AbstractDb
      * @param string $query - query
      * @return mixed - first row that was selected or bool false if any results
      */
-    public function getRow($query)
+    public function getRow($query, $parameters = array())
     {
-        $query = $this->query($query);
+        $query = $this->query($query, $parameters);
         //if there is result, get first row
         return $query->num_rows > 0 ? $query->fetch_row() : $this->result;
     }
@@ -47,9 +47,9 @@ class DbAdapter extends AbstractDb
      * @param string $query - query
      * @return array assoc array that was selected or bool false if any results
      */
-    public function getArray($query)
+    public function getArray($query, $parameters = array())
     {
-        $query = $this->query($query);
+        $query = $this->query($query, $parameters);
         //if there is result
         if ($query->num_rows > 0) {
             $this->result = array();
@@ -64,12 +64,13 @@ class DbAdapter extends AbstractDb
     /**
      * Make all type of queries INSERT, UPDATE, DELETE
      *
-     * @param string $query - query
+     * @param string $query query
+     * @param array $parameters list of the parameters
      * @return bool true if query is success and false if query is fail
      */
-    public function makeQuery($query)
+    public function makeQuery($query, $parameters = array())
     {
-        return $this->query($query);
+        return $this->query($query, $parameters);
     }
 
     /**

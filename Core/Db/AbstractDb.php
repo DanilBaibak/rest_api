@@ -38,16 +38,40 @@ abstract class AbstractDb
     /**
      * Run the query
      *
-     * @param string $query - Current query. Screening of variables remains on the conscience for developer!
+     * @param $query Current query. Screening of variables remains on the conscience for developer!
+     * @param array $parameters incoming parameters
+     *
      * @return object of MySQLi
      */
-    protected function query($query)
+    protected function query($query, $parameters)
     {
-        $queryResult = $this->mysqli->query($query);
+        $preparedQuery = $query;
+        if (!empty($parameters)) {
+            //prepare parameters
+            $preparedParameters = $this->prepareQueryParams($parameters);
+            //prepare query
+            $preparedQuery = str_replace(array_keys($preparedParameters), array_values($preparedParameters), $query);
+        }
+        $queryResult = $this->mysqli->query($preparedQuery);
         if ($this->mysqli->errno) {
             die('Select Error (' . $this->mysqli->errno . ') ' . $this->mysqli->error);
         }
         return $queryResult;
+    }
+
+    /**
+     * Prepare incoming parameters for the query
+     *
+     * @param array $parameters incoming parameters
+     * @return array
+     */
+    private function prepareQueryParams($parameters)
+    {
+        $preparedParameters = array();
+        foreach ($parameters as $key => $value) {
+            $preparedParameters[":" . $key] = addslashes($value);
+        }
+        return $preparedParameters;
     }
 
     /**
