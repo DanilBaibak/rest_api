@@ -45,15 +45,16 @@ class Router
             //try find current resource from the list
             foreach ($resources as $resource) {
                 $hasResource = $this->checkResource($resource, $requestComponents);
-                if ($hasResource) {
+                if ($hasResource['status']) {
                     break;
                 }
             }
+
             /**
              * if there is such resource in the resources list, load it
              */
-            if ($hasResource) {
-                $this->launch($resource, $requestUrl);
+            if ($hasResource['status']) {
+                $this->launch($resource, $requestUrl, $hasResource['parameter']);
             } else {
                 //or load "page not found"
                 $controller = new \App\Controllers\ErrorController();
@@ -70,20 +71,18 @@ class Router
      *
      * Created by Danil Baibak danil.baibak@gmail.com
      */
-    private function launch($resource, $requestUrl)
+    private function launch($resource, $requestUrl, $parameter)
     {
         $controller = "App\\Controllers\\" . $resource['controller'];
         $action = $resource['action'];
 
         //load requested resource
         $page = new $controller();
-        //get 'id' of the entity from the url
-        preg_match('/([0-9]+)$/', $requestUrl, $urlParameter);
         //call action with parameter or without
-        if (empty($urlParameter)) {
-            $page->$action();
+        if ($parameter) {
+            $page->$action($parameter);
         } else {
-            $page->$action($urlParameter[0]);
+            $page->$action();
         }
     }
 
@@ -98,7 +97,9 @@ class Router
      */
     private function checkResource($resource, $requestComponents)
     {
-        $hasResource = false;
+        $response = array();
+        $response['status'] = false;
+        $response['parameter'] = false;
         $resourceComponents = explode('/', $resource['resource']);
 
         //the common comparison
@@ -106,20 +107,29 @@ class Router
             $resource['method'] == $_SERVER['REQUEST_METHOD'] &&
             count($resourceComponents) == count($requestComponents)
         ) {
-            $hasResource = true;
+            $response['status'] = true;
             //the detailed comparison
             foreach ($resourceComponents as $key => $resourceValue) {
+                //check parameters in the url
+
                 if (strpos($resourceValue, ':') !== false) {
-                    continue;
+                    preg_match('/([0-9]+)$/', $requestComponents[$key], $urlParameter);
+                    if (empty($urlParameter)) {
+                        $response['status'] = false;
+                        break;
+                    } else {
+                        $response['parameter'] = $urlParameter[0];
+                        continue;
+                    }
                 }
 
                 if ($resourceValue != $requestComponents[$key]) {
-                    $hasResource = false;
+                    $response['status'] = false;
                     break;
                 }
             }
         }
-        return $hasResource;
+        return $response;
     }
 }
 
