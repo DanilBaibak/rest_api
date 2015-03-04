@@ -14,7 +14,7 @@ class Bootstrap
     /**
      * Initialise application
      *
-     * Created by Danil Baibak danil.baibak@lamudi.com
+     * Created by Danil Baibak danil.baibak@gmail.com
      */
     public static function init()
     {

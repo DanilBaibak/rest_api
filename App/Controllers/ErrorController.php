@@ -14,4 +14,4 @@ class ErrorController
         header('HTTP/1.0 404 Not Found');
         echo "The current page wasn't found";
     }
-} 
+}
