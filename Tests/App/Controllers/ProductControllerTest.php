@@ -9,15 +9,20 @@
 namespace Tests\App\Controllers;
 
 use GuzzleHttp\Exception\ClientException;
+use Core\Tests\HttpTestTrait as HttpTestTrait;
 
 class ProductControllerTest extends \PHPUnit_Framework_TestCase
 {
-    public $client;
-    const SITE_URL = 'http://rest_my.work/';
+    use HttpTestTrait;
 
+    /**
+     * Setup data for testing
+     *
+     * @throws \Exception
+     */
     public function __construct()
     {
-        $this->client = new \GuzzleHttp\Client();
+        $this->init();
     }
 
     /**
@@ -25,7 +30,7 @@ class ProductControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetProducts()
     {
-        $response = $this->client->get(self::SITE_URL . 'products');
+        $response = $this->client->get(SITE_URL . 'products');
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertNotEmpty($response->json());
@@ -36,9 +41,9 @@ class ProductControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetProduct()
     {
-        $products = $this->client->get(self::SITE_URL . 'products')->json();
+        $products = $this->client->get(SITE_URL . 'products')->json();
         if (!empty($products)) {
-            $response = $this->client->get(self::SITE_URL . 'product/' . $products[0]['id']);
+            $response = $this->client->get(SITE_URL . 'product/' . $products[0]['id']);
 
             $this->assertEquals(200, $response->getStatusCode());
             $this->assertNotEmpty($response->json());
@@ -50,7 +55,7 @@ class ProductControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCheckUniqueProduct()
     {
-        $response = $this->client->get(self::SITE_URL . 'product/check_unique_value?field=name&value=test_name');
+        $response = $this->client->get(SITE_URL . 'product/check_unique_value?field=name&value=test_name');
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertTrue($response->json()['status']);
     }
@@ -61,7 +66,7 @@ class ProductControllerTest extends \PHPUnit_Framework_TestCase
     public function testCheckUniqueProductFail()
     {
         try {
-            $this->client->get(self::SITE_URL . 'product/check_unique_value');
+            $this->client->get(SITE_URL . 'product/check_unique_value');
         } catch (ClientException $e) {
             $this->assertEquals(400, $e->getResponse()->getStatusCode());
         }

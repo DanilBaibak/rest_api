@@ -8,4 +8,5 @@ return array(
         'charset' => 'utf8'
     ),
     'displayErrors' => false,
+    'siteUrl' => 'http://test-site.com/'
 );

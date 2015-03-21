@@ -8,14 +8,20 @@
 
 namespace Tests\App\Controllers;
 
+use Core\Tests\HttpTestTrait as HttpTestTrait;
+
 class AuxiliaryDataControllerTest extends \PHPUnit_Framework_TestCase
 {
-    public $client;
-    const SITE_URL = 'http://rest_my.work/';
+    use HttpTestTrait;
 
+    /**
+     * Setup data for testing
+     *
+     * @throws \Exception
+     */
     public function __construct()
     {
-        $this->client = new \GuzzleHttp\Client();
+        $this->init();
     }
 
     /**
@@ -23,7 +29,7 @@ class AuxiliaryDataControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetGroups()
     {
-        $response = $this->client->get(self::SITE_URL . 'groups');
+        $response = $this->client->get(SITE_URL . 'groups');
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertNotEmpty($response->json());
@@ -34,7 +40,7 @@ class AuxiliaryDataControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetShippers()
     {
-        $response = $this->client->get(self::SITE_URL . 'shippers');
+        $response = $this->client->get(SITE_URL . 'shippers');
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertNotEmpty($response->json());

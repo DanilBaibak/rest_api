@@ -9,15 +9,20 @@
 namespace Tests\App\Controllers;
 
 use GuzzleHttp\Exception\ClientException;
+use Core\Tests\HttpTestTrait as HttpTestTrait;
 
 class ErrorControllerTest extends \PHPUnit_Framework_TestCase
 {
-    public $client;
-    const SITE_URL = 'http://rest_my.work/';
+    use HttpTestTrait;
 
+    /**
+     * Setup data for testing
+     *
+     * @throws \Exception
+     */
     public function __construct()
     {
-        $this->client = new \GuzzleHttp\Client();
+        $this->init();
     }
 
     /**
@@ -26,7 +31,7 @@ class ErrorControllerTest extends \PHPUnit_Framework_TestCase
     public function testPageNotFound()
     {
         try {
-            $this->client->get(self::SITE_URL . 'wrong_url');
+            $this->client->get(SITE_URL . 'wrong_url');
         } catch (ClientException $e) {
             $this->assertEquals(404, $e->getResponse()->getStatusCode());
         }
