@@ -31,5 +31,4 @@ class ErrorControllerTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals(404, $e->getResponse()->getStatusCode());
         }
     }
-
 }

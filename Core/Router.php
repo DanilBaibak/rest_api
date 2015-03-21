@@ -54,7 +54,7 @@ class Router
              * if there is such resource in the resources list, load it
              */
             if ($hasResource['status']) {
-                $this->launch($resource, $requestUrl, $hasResource['parameter']);
+                $this->launch($resource, $hasResource['parameter']);
             } else {
                 //or load "page not found"
                 $controller = new \App\Controllers\ErrorController();
@@ -67,11 +67,11 @@ class Router
      * Launch current resource
      *
      * @param array $resource Data about the resource, which call
-     * @param string $requestUrl current url
+     * @param int $parameter id of the current entity
      *
      * Created by Danil Baibak danil.baibak@gmail.com
      */
-    private function launch($resource, $requestUrl, $parameter)
+    private function launch($resource, $parameter)
     {
         $controller = "App\\Controllers\\" . $resource['controller'];
         $action = $resource['action'];
@@ -111,7 +111,6 @@ class Router
             //the detailed comparison
             foreach ($resourceComponents as $key => $resourceValue) {
                 //check parameters in the url
-
                 if (strpos($resourceValue, ':') !== false) {
                     preg_match('/([0-9]+)$/', $requestComponents[$key], $urlParameter);
                     if (empty($urlParameter)) {
@@ -132,7 +131,3 @@ class Router
         return $response;
     }
 }
-
-
-
-

@@ -27,7 +27,7 @@ abstract class AbstractDb
 
         //connection to DB
         $this->mysqli = new \mysqli(
-            $config['Db']['host'], $config['Db']['username'], $config['Db']['password'], $config['Db']['dbname']
+            $config['Db']['host'], $config['Db']['username'], $config['Db']['password'], $config['Db']['dbName']
         );
 
         if ($this->mysqli->connect_error) {
@@ -93,4 +93,4 @@ abstract class AbstractDb
     {
         return $this->mysqli->affected_rows;
     }
-} 
+}

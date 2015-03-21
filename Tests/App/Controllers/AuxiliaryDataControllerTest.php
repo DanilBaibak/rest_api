@@ -8,8 +8,6 @@
 
 namespace Tests\App\Controllers;
 
-use GuzzleHttp\Exception\ClientException;
-
 class AuxiliaryDataControllerTest extends \PHPUnit_Framework_TestCase
 {
     public $client;

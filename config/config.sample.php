@@ -4,7 +4,7 @@ return array(
         'host' => '',
         'username' => '',
         'password' => '',
-        'dbname' => '',
+        'dbName' => '',
         'charset' => 'utf8'
     ),
     'displayErrors' => false,

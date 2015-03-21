@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Tests for ErrorController
  * User: Danil Baibak danil.baibak@gmail.com
  * Date: 04/03/15
  * Time: 11:08
