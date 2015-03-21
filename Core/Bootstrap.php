@@ -18,7 +18,7 @@ class Bootstrap
      */
     public static function init()
     {
-        $pathToConfig = BASE_PATH . "config/config.php";
+        $pathToConfig = CONFIG . "config.php";
 
         //get config
         if (file_exists($pathToConfig)) {
