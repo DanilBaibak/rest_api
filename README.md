@@ -36,20 +36,8 @@
 
 <p><strong>Resource (config/resources.php</strong><strong>): </strong>contains the rules for routing.&nbsp;Each action have to be describe with list of the rules.&nbsp;&#39;<strong>resource</strong>&#39; - url for access to the current action, &#39;<strong>method</strong>&#39; - method of the request, &#39;<strong>controller</strong>&#39; - name of the controller, &#39;<strong>action</strong>&#39; - name of the action. Please, look at the example:</p>
 
-<code>&#39;resource&#39; &nbsp; =&gt; &#39;product/check_unique_value&#39;,
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&#39;method&#39; &nbsp; &nbsp; =&gt; &#39;GET&#39;,
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&#39;controller&#39; &nbsp;=&gt; &#39;ProductController&#39;,
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&#39;action&#39; &nbsp; &nbsp; &nbsp; =&gt; &#39;checkUniqueProduct&#39;</code>
+<div><code>&#39;resource&#39; &nbsp; =&gt; &#39;product/check_unique_value&#39;,</code></div>
+<div><code>&#39;method&#39; &nbsp; &nbsp; =&gt; &#39;GET&#39;,</code></div>
+<div><code>&#39;controller&#39; &nbsp;=&gt; &#39;ProductController&#39;,</code></div>
+<div><code>&#39;action&#39; &nbsp; &nbsp; &nbsp; =&gt; &#39;checkUniqueProduct&#39;</code></div>
+
